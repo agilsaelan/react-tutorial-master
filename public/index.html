@@ -35,7 +35,12 @@
             }.bind(this)
           });
         },
-        handleCommentSubmit: function() {
+        handleCommentSubmit: function(comment) {
+          var comments = this.state.data;
+
+          comment.id = Date.now();
+          var newComments = comments.concat([comment]);
+          this.setState({data: newComments});
           //submit to the server and refresh the list
           $.ajax({
             url: this.props.url,
@@ -46,6 +51,7 @@
               this.setState({data: data});
             }.bind(this),
             error: function(xhr, status, err) {
+              this.setState({data: comments});
               console.error(this.props.url, status, err.toString());
             }.bind(this)
           });
@@ -96,6 +102,7 @@
           if (!text || !author) {
             return;
           }
+          // send request to the server
           this.props.onCommentSubmit({author: author, text: text});
           this.setState({author: '', text: ''})
         },
