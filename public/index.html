@@ -44,7 +44,7 @@
           //submit to the server and refresh the list
           $.ajax({
             url: this.props.url,
-            dataType: json,
+            dataType: 'json',
             type: 'POST',
             data: comment,
             success: function(data) {
